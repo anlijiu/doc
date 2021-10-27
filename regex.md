@@ -26,7 +26,7 @@ regexp = /pattern/gmi; // with flags g,m and i (to be covered soon)
 - U+2028 — 行分隔符
 - U+2029 — 段落分隔符
 
-### pattern
+### Pattern
 
 ##### ✏️ "Gibberish" Characters
 
@@ -45,6 +45,7 @@ regexp = /pattern/gmi; // with flags g,m and i (to be covered soon)
 > 注意：字符与字符之间还有一个位置，例如 'I' 和 't' 之间就有一个位置（没有任何东西），这样的位置我给它取个名字叫“隐式位置”。
 > “隐式位置”就是 \b 的关键！通俗的理解，\b 就是“隐式位置”。
 
+##### 🖋️ 特殊字符
 | Syntax | Special Character | Matches                                             | Example String | Example Expression | Example Match |
 | ------ | ----------------- | --------------------------------------------------- | -------------- | ------------------ | ------------- |
 | `\`    | _escape(转意符)_  | `[{()}].*+?$^/\` 这些字符都需要转意才能匹配         | `)$[]*{`       | `\[\]`             | `[]`          |
@@ -61,7 +62,7 @@ regexp = /pattern/gmi; // with flags g,m and i (to be covered soon)
 | `\r`   | _carriage return_ | 回车                          |
 | `\f`   | _form-feed_       | 换页符                        |
 
-##### 区间 _(range)_
+##### 🖌️ 区间 _(range)_
 | Syntax      | Range                 | Matches                                     | Example String     | Example Expression | Example Match   |
 | ----------- | --------------------- | ------------------------------------------- | ------------------ | ------------------ | --------------- |
 | `[pog]`     | _word list_           | `p`或者`o`或者`g`                           | `awesomePOSSUM123` | `[awesum]+`        | `awes`          |
@@ -73,7 +74,7 @@ regexp = /pattern/gmi; // with flags g,m and i (to be covered soon)
 | `[a-zA-Z]`  | _word range_          | 匹配 `a`到`z` 和 `A`到`Z` 区间内的任何字符  | `awesomePOSSUM123` | `[a-zA-Z]+`        | `awesomePOSSUM` |
 | `[^a-zA-Z]` | _word range_          | 不在 `a`到`z` 和 `A`到`Z` 区间内的任何字符  | `awesomePOSSUM123` | `[^a-zA-Z]+`       | `123`           |
 
-##### 数量词 _(quantifiers)_
+##### 🖊️ 数量词 _(quantifiers)_
 用于修饰该词前面pattern出现次数
 | Syntax      | Quantifier | Matches                                     | Example String | Example Expression | Example Match |
 | ----------- | ---------- | ------------------------------------------- | -------------- | ------------------ | ------------- |
@@ -103,6 +104,50 @@ regexp = /pattern/gmi; // with flags g,m and i (to be covered soon)
 > 贪婪匹配尽可能多， 懒惰匹配尽可能少
 > 占位在不发生回溯的时候等于贪婪， 发生回溯的时候什么都不匹配了
 
+##### 🖍️ 组 _(Groups)_
+| Syntax         | Group            | Matches                                                         | Example String     | Example Expression      | Example Match      |
+| -------------- | ---------------- | ------------------------------------------------ | ----------------- | ------------------------ | ----------------------- |
+| `|`            | 候补 _alternate_ | Either the preceding or following expression     | `truly rural`     | `truly|rural`            | `truly`                 |
+| `(...)`        | 隔离 _isolate_   | 普通捕获组                                       | `2008-12-31`      | `(\d{4})-(\d{2}-(\d\d))` | `2008-12-31`            |
+| `(?<name>exp)` | 命名捕获组       | 组名:name,  匹配exp                              | `abcabcabc`       | `(?<x>abc){3}`           | `abcabcabc` 组名:x      |
+| `(?:...)`      | _include_        | 非捕获组 [Non-Capturing Groups](https://www.regular-expressions.info/branchreset.html)  | `truly ruralrural` | `truly (?:rural)+`      | `truly ruralrural` 无组 |
+| `(?|...)`      | _combine_ | 共用集合 [Branch Reset Groups](https://www.regular-expressions.info/branchreset.html) | `truly rural`      | `(?|(rural)|(truly))`   | `truly`            |
+| `(?>...)`  | _atomic_    | 原子集合(https://www.regular-expressions.info/atomic.html) 这个集合是不可分的，即要么匹配要么失败，不会有所谓的不同尝试路径 | `truly rural`      | `(?>rur)`               | ` rur`             |
+| `(?#...)`  | _comment_   | (?# 这里面所有的都是注释,除了')' )              | `truly #rural`     | `truly (?#rural)`       | `truly`            |
+
+##### ⚓ 锚 _(Anchors)_
+
+| Syntax | Anchor                  | Matches                                             | Example String       | Example Expression | Example Match |
+| ------ | ----------------------- | --------------------------------------------------- | -------------------- | ------------------ | ------------- |
+| `^`    | _start_                 | Start of string                                     | `she sells seashells` | `^\w+`             | `she`         |
+| `$`    | _end_                   | End of string                                       | `she sells seashells` | `\w+$`             | `seashells`   |
+| `\b`   | _word boundary_         | Between a character matched and not matched by `\w` | `she sells seashells` | `s\b`              | `s`           |
+| `\B`   | **NOT** _word boundary_ | Between two characters matched by `\w`              | `she sells seashells` | `\w+$`             | `seashells`   |
+
+There are additional anchors available that are unaffected by multiline mode [m](#-flapdoodle-flags).
+
+| Syntax | Anchor         | Matches                                            | Example String    | Example Expression | Example Match |
+| ------ | -------------- | -------------------------------------------------- | ----------------- | ------------------ | ------------- |
+| `\A`   | _multi-start_  | 一个字符串开始匹配(包含换行)                       | `she sees cheese` | `\A\w+`            | `she`         |
+| `\Z`   | _multi-end_    | 字符串末尾匹配, 字串末尾位置或换行符位置 可能是也可能不是零宽度 | `she sees cheese` | `\w+\Z`            | `cheese`      |
+| `\z`   | _absolute end_ | 绝对行尾位置，之后再无其他内容                     | `she sees cheese` | `\w+\Z`            | `cheese`      |
+> 对于一个字符串 "this is\nthe time" /\Athe/  没有任何匹配，  因为此字符串中的 the 不是在开始处
+
+##### 先行断言 _(lookahead)_ 和后行断言 _(lookbehind)_
+> 不要用先行断言和后行断言， 要用组
+
+| Syntax         | Anchor         | Matches                                                    | Example String   | Example Expression | Example Match |
+| -------------- | -------------- | ---------------------------------------------------------- | ---------------- | ------------------ | ------------- |
+| `(?=pattern)`  |                | 零宽正向先行断言(zero-width positive lookahead assertion)  |                  |                    |               |
+| `(?!pattern)`  |                | 零宽负向先行断言(zero-width negative lookahead assertion)  |                  |                    |               |
+| `(?<=pattern)` |                | 零宽正向后行断言(zero-width positive lookbehind assertion) |                  |                    |               |
+| `(?<!pattern)` |                | 零宽负向后行断言(zero-width negative lookbehind assertion) |                  |                    |               |
+
+
 ### 避免回溯 
 https://segmentfault.com/a/1190000021394276?sort=votes
+https://zhuanlan.zhihu.com/p/161076988
 当多选结构中的一个分支失败时，引擎会在字串中"回溯"到之前的位置，尝试下一个分支。
+
+### NFA _(不确定的有穷自动机)_ 和DFA _(确定的有穷自动机)_
+[有穷自动机](https://zhuanlan.zhihu.com/p/30009083)
