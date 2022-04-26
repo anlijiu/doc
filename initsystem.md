@@ -10,3 +10,6 @@ nvm ls-remote
 nvm install v18.0.0
 
 
+deno
+
+curl -fsSL https://deno.land/install.sh | sh
