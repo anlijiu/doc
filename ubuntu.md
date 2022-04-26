@@ -10,6 +10,12 @@
   ``` shell
   sudo apt build-dep dunst
   ```
++ 查看系统硬件信息
+  ```
+  sudo apt install inxi
+  inxi -Fazy
+  ```
+
 + 查看systemd 服务从哪里找寻 *.service文件
   ``` shell
   systemctl --no-pager --property=UnitPath show | tr ' ' '\n'
@@ -60,6 +66,7 @@
 gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
 gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
 gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode FIXED
+gsettings set org.gnome.shell.extensions.dash-to-dock  apply-custom-theme true
 gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 64
 gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items true
 
@@ -176,4 +183,14 @@ gsettings reset org.gnome.shell.extensions.dash-to-dock dash-max-icon-size
 + 查看历史命令
   ```
   Ctrl + R
+  ```
+
+### update-alternatives
+  ```
+  # 创建 /usr/local/bin/python 连接， 指向 /usr/bin/python2
+  sudo update-alternatives --install /usr/local/bin/python python /usr/bin/python2 20
+  sudo update-alternatives --install /usr/local/bin/python python /usr/bin/python3 10
+
+  # 选择python 2 / 3
+  sudo update-alternatives --config python
   ```
