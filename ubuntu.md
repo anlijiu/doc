@@ -57,6 +57,11 @@
   ```
   man ascii
   ```
++ 查看&修改系统时区
+  ```
+  timedatectl status
+  timedatectl set-timezone "Asia/Shanghai"
+  ```
 
 ### gnome 常用设置
 

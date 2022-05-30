@@ -22,7 +22,14 @@ y^2 + y 可以表示为 y * (y + 1) , 所以 y 和 y+1 都是  y^2 + y 的因子
 a^2 - b^2 可以表示为 (a+b)(a-b)， 所以 a+b 和 a-b 都是a^2 - b^2的因子factors
 
 ### Coefficients 系数
+对于 4a^2 来说，  4 是 a^2 的数值系数(numerical coefficient),  a^2 是 4 的字面系数(literal coefficient).
+对于 12n 来说， 12 是 n 的数值系数.
+如果没有数字， 那么认为数值系数为1.
+例如expr:  a^2 + b， 那么 term a^2 的数值系数为1,  term b 的数值系数为1
+拥有相同字面系数的 terms 被成为相似项(liked terms), 不同字面系数的为不同项
 
+例如 3x^3 ,   -x^3,  2x^3  这三个terms拥有相同的字面系数 x^3 ， 所以这三个项为相似项
+2x^2, 6x, -x^4 这三个terms字面系数不同， 所以为不同项
 
 ![expr-term-factor](https://raw.githubusercontent.com/anlijiu/doc/assets/expression-term-factor-coefficient.png)
 
