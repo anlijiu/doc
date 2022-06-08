@@ -10,8 +10,18 @@
   ``` shell
   sudo apt build-dep dunst
   ```
-+ 查看系统硬件信息
++ 安装特定版本软件包
+  ``` shell
+  sudo apt install  nvidia-settings=510.47.03-0ubuntu1
   ```
++ 删除软件包
+  ``` shell
+  sudo apt-get remove --purge '^nvidia-.*'
+  sudo apt purge '*nvidia*'
+  sudo apt autoremove
+  ```
++ 查看系统硬件信息
+  ``` shell
   sudo apt install inxi
   inxi -Fazy
   ```

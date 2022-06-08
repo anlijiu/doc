@@ -1,7 +1,13 @@
+https://dev.to/davidadewoyin/top-rust-cargo-commands-2b70
+
 ### 基本命令
 cargo build
 cargo test
-
+cargo tree
+cargo search
+cargo install
+cargo uninstall
+cargo run --example hello
 ``` shell
 # 修改cargo源为国内
 vim ~/.cargo/config
@@ -21,4 +27,13 @@ spurious network error (2 tries remaining): [35] SSL connect error (OpenSSL SSL_
 ``` shell
 rustup install nightly
 cargo +nightly build
+
+rustup toolchain install nightly
+rustup default nightly
+```
+
+### 查找不再使用的依赖项
+``` shell
+cargo install cargo-udeps --locked
+cargo +nightly udeps
 ```

@@ -8,6 +8,8 @@ Expression -> Expression + Term | Term
 2xy - 3 有 2 个项，称为二项式。
 x 2  + 3x + 2 有 3 项并且是三项式。 
 
+通常表达式产生新值
+
 ### Term  项
 
 Term -> Term x Factor | Factor
@@ -48,3 +50,23 @@ Operators(运算符): - and +
 https://zhuanlan.zhihu.com/p/362072187
 
 https://zhuanlan.zhihu.com/p/363588226
+
+### Statement 语句
+语句是命令式编程语言的句法单元，表示要执行的某些操作。
+程序由一个或多个语句的序列组成。
+语句可能具有内部组件（例如，expressions）。
+expression是表达式，不是程序。表达式可被求值。 如 3 + 5,  (let b = 3) in b + 5
+而statement，可以理解为最短的程序。语句不一定有值。 如 a = 3 + 5 ( let a = 3 + 5)
+程序由语句和表达式组成。
+1. 表达式有值，语句没有值， 能作为函数参数即为表达式，否则为语句。
+2. C语言中的控制结构为语句。
+3. 函数式语言中的所有东西都有值， 都是表达式
+
+声明式语言一般有三种statement
+Expression statements: change values of variables, call methods, and create objects.
+Declaration statements: declare variables.
+Control-flow statements: determine the order that statements are executed. 
+
+### reference
++ [rust reference](https://doc.rust-lang.org/stable/reference/)
++ [java18 specification](https://docs.oracle.com/javase/specs/jls/se18/html/index.html)
