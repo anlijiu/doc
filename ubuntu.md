@@ -6,24 +6,48 @@
   # 或者
   sudo apt -s build-dep dunst
   ```
+
 + 直接安装编译某个包需要依赖的开发包
   ``` shell
   sudo apt build-dep dunst
   ```
+
 + 安装特定版本软件包
   ``` shell
   sudo apt install  nvidia-settings=510.47.03-0ubuntu1
   ```
+
++ 由大到小排序
+  ``` shell
+  ls -Sl
+  ```
++ 从小到大排序
+  ``` shell
+  ls -Slr
+  ```
+
 + 删除软件包
   ``` shell
   sudo apt-get remove --purge '^nvidia-.*'
   sudo apt purge '*nvidia*'
   sudo apt autoremove
   ```
+
 + 查看系统硬件信息
   ``` shell
   sudo apt install inxi
   inxi -Fazy
+  ```
+
++ 关闭系统自动更新
+  ``` shell
+  sudo vi /etc/apt/apt.conf.d/20auto-upgrades
+  # 将内容中 1 改为0
+  # APT::Periodic::Update-Package-Lists "0";
+  # APT::Periodic::Unattended-Upgrade "0";
+
+  # 然后更新设置到系统
+  sudo dpkg-reconfigure unattended-upgrades
   ```
 
 + 查看systemd 服务从哪里找寻 *.service文件
@@ -32,6 +56,7 @@
   # 查看某个 service 状态
   sudo systemctl status dunst.service
   ```
+
 + 查看某个文件属于哪个包
   ``` shell
   dpkg -S notify-send
@@ -40,35 +65,42 @@
   # sudo apt-file update
   # apt-file search notify-send
   ```
+
 + 创建删除虚拟网卡
-  ```
+  ``` shell
   sudo ifconfig enp0s31f6:0 192.168.21.228 up
   sudo ifconfig enp0s31f6:0 down
   ```
+
 + 显示所有用户及uid
-  ```
+  ``` shell
   cut -d ':' -f 1,3 /etc/passwd | sort -t ':' -k2n - | tr ':' '\t'
   ```
+
 + 查看进程使用内存状况
-  ```
+  ``` shell
   ps aux | awk '{if ($5 != 0 ) print $2,$5,$6,$11}' | sort -k2n
   # PID VSZ RSS COMMAND
   # 升序， 最下面的占用最大
   ```
+
 + 找到top 10 最大文件
-  ```
+  ``` shell
   du -sk /var/log/* | sort -r -n | head -10
   ```
+  
 + 找到top 10 最常用命令(.bash_history)
   ```
   cat ~/.bash_history | tr "\|\;" "\n" | sed -e "s/^ //g" | cut -d " " -f 1 | sort | uniq -c | sort -n | tail -n 15
   ```
+
 + 查看ascii
-  ```
+  ``` shell
   man ascii
   ```
+
 + 查看&修改系统时区
-  ```
+  ``` shell
   timedatectl status
   timedatectl set-timezone "Asia/Shanghai"
   ```
